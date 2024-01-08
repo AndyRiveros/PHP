@@ -2,6 +2,8 @@
 
 require 'includes/database.php';
 
+$conn = getDB();
+
 $sql = "SELECT*
         FROM article
         ORDER BY published_at;";
@@ -27,12 +29,11 @@ $sql = "SELECT*
                 <?php foreach ($articles as $article): ?>
                     <li>
                         <article>
-                        <h2><a href="article.php?id=<?=$article['id']; ?>"><?=$article['title'];
-                            ?></a></h2>
-                            <p><?=$article['content'];?></p>
+                        <h2><a href="article.php?id=<?=$article['id']; ?>"><?=$article['title'];?></a></h2>                            
+                        <p><?=$article['content'];?></p>
                         </article>
                     </li>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
             </ul>
             <?php endif;?>
 <?php require 'includes/footer.php'; ?>
