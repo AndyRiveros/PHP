@@ -4,7 +4,8 @@
  * 
  * @return object connection to a MySQL server
  */
-function getDB(){
+function getDB()
+{
 
 $db_host = "localhost";
 $db_name = "cms";
