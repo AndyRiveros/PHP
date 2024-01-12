@@ -3,6 +3,15 @@
 require 'includes/database.php';
 require 'includes/article.php';
 require 'includes/url.php';
+require 'includes/auth.php';
+
+session_start();
+
+if ( ! isLoggedIn() ) {
+
+    die("unauthorized");
+
+}
 
 
 $title = '';
@@ -15,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $content= $_POST['content'];
         $published_at= $_POST['published_at'];
 
-        $errors = validateArticle($title, $content, $published_at);//NEW
+        $errors = validateArticle($title, $content, $published_at);
 
         if (empty($errors)){
             
@@ -60,4 +69,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <h2>New Article</h2>
 
 <?php require'includes/article-form.php';?>
+
 <?php require 'includes(footer.php';?>
