@@ -1,20 +1,27 @@
 <?php
 
 require 'includes/url.php';
+require 'classes/User.php';
+require 'classes/Database.php';
 
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $db = new Database();
+    $conn = $db->getConn();
     
-    if ($_POST['username'] == 'dave' && $_POST['password'] == 'secret'){
+    if (User::authenticate($conn, $_POST['username'], $_POST['password'])){
         session_regenerate_id(true);
 
         $_SESSION['is_logged_in'] = true;
 
         redirect('/');
-    }else{
+    }   else{
+
         $error = "login incorrect";
-    }    
+
+    }
 }
 
 ?>
