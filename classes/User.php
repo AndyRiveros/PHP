@@ -37,8 +37,8 @@ class User
     public static function authenticate($conn, $username, $password)
     {
         $sql = "SELECT *
-        FROM user
-        WHERE username = :username";
+                FROM user
+                WHERE username = :username";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':username', $username, PDO::PARAM_STR);

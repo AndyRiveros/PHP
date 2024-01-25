@@ -1,22 +1,18 @@
 <?php
 
-require 'includes/url.php';
-require 'classes/User.php';
-require 'classes/Database.php';
+require 'includes/init.php';
 
-session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    $db = new Database();
-    $conn = $db->getConn();
+    $conn = require 'includes/db.php';
     
     if (User::authenticate($conn, $_POST['username'], $_POST['password'])){
-        session_regenerate_id(true);
+        
+        Auth::login();
 
-        $_SESSION['is_logged_in'] = true;
-
-        redirect('/');
+        Url::redirect('/');
+        
     }   else{
 
         $error = "login incorrect";

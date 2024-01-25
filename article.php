@@ -1,12 +1,10 @@
 <?php
 
-require 'classes/Database.php';
-require 'classes/Article.php';
+require 'includes/init.php';
 
-$db = new Database();
-$conn = $db->getConn();
+$conn = require 'includes/db.php';
 
-if (isset($_GET['id']) ){
+if (isset($_GET['id'])){
     
     $article = Article::getByID($conn, $_GET['id']);
     
@@ -25,9 +23,6 @@ if (isset($_GET['id']) ){
             <h2><?=htmlspecialchars($article->title);?></h2>
             <p><?=htmlspecialchars($article->content);?></p>
         </article>
-
-            <a href="edit-article.php?id=<?= $article->id;?>">Edit</a>
-            <a href="delete-article.php?id=<?=$article->id;?>">Delete</a>
     
     <?php else:?>
         <p>Article not found</p>
