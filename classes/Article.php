@@ -32,6 +32,12 @@ class Article
     public $published_at;
 
     /**
+     * Path to the image
+     * @var string
+     */
+    public $image_file;
+
+    /**
      * Validation errors
      * @var array
      */
@@ -54,7 +60,34 @@ class Article
         
         return $results->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
+    /**
+     * Get a page of articles
+     * 
+     * @param object $conn Connection to the database
+     * @param integer $limit Number of records to return
+     * @param integer $offset Number of records to skip
+     * 
+     * @return array An associative array of all the article records
+    */
+    public static function getPage($conn, $limit, $offset)
+    {
+        $sql = "SELECT *
+                FROM article
+                ORDER BY published_at
+                LIMIT :limit
+                OFFSET :offset";
+                
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 /**
 * Get the article record based on the ID
 *
@@ -204,5 +237,39 @@ public function create($conn)
     }else{
         return false;
     }
-  }
+}
+
+  /**
+   * Get a count of the total number of records
+   * 
+   * @param object $conn Connection to the database
+   * 
+   * @return integer The total number of records
+   */
+    public static function getTotal($conn)
+    {
+        return $conn->query('SELECT COUNT(*) FROM article')->fetchColumn();
+    }
+
+    /**
+     * Update the image file property
+     * 
+     * @param object $conn Connection to the database
+     * @param string $filename The filename of the image file
+     * 
+     * @return boolean True if it was successful, false otherwise
+     */
+    public function setImageFile($conn, $filename)
+    {
+        $sql = "UPDATE article
+                SET image_file = :image_file
+                WHERE id = :id";
+        
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindValue(':image_file', $filename, $filename == null? PDO::PARAM_NULL : PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
 }
