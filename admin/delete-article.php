@@ -44,4 +44,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 </form>
 
-<?php require '::/includes/footer.php';?>
+<?php require '../includes/footer.php';?>

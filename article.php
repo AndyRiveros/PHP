@@ -20,13 +20,21 @@ if (isset($_GET['id'])){
    <?php if ($article): ?>
             
         <article>
-            <h2><?=htmlspecialchars($article->title);?></h2>
+            <h2><?=htmlspecialchars($article[0]['title']);?></h2>
 
-            <?php if ($article->image_file): ?>
-                <img src="/uploads/<?=$article->image_file;?>">
+            <?php if ($article[0]['category_name']): ?>
+                <p>Categories:
+                    <?php foreach ($article as $a) : ?>
+                        <?=htmlspecialchars($a['category_name']);?>
+                    <?php endforeach;?>
+                </p>
             <?php endif;?> 
 
-            <p><?=htmlspecialchars($article->content);?></p>
+            <?php if ($article[0]['image_file']) :?>
+                <img src="/uploads/<?= $article[0]['image_file']; ?>">
+            <?php endif; ?>
+
+            <p><?=htmlspecialchars($article[0]['content']);?></p>
         </article>
     
     <?php else:?>

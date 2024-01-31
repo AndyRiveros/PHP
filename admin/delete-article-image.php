@@ -35,10 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 <h2>Delete article image</h2>
 
-<?php if ($article->image_file):?>
-    <img src="/uploads/<?=$article->image_file;?>">
-<?php endif;?>
-
 <form method="post">
     <p>Are you sure?</p>
     <button>Delete</button>

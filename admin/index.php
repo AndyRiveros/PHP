@@ -20,6 +20,7 @@ $articles = Article::getPage($conn, $paginator->limit, $paginator->offset);
 <?php if (empty($articles)) :?>
     <p>No articles found.</p>
 <?php else :?>
+    
     <table>
         <thead>
             <tr>
